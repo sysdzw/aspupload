@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<style type="text/css">
+*{margin:0px; padding:0px;}
+</style>
+<script src="https://cdn.staticfile.org/jquery/1.11.2/jquery.min.js"></script>
+<title>上传文件测试</title>
+</head>
+<body>
+<form method="post" name="form1" id="form1"  enctype="multipart/form-data">
+  <input name="file1" id="file1" type="file" multiple="multiple" size="20" accept="image/gif,image/jpg,image/jpeg,image/png">
+  <div id="result"></div>
+</form>
+</body>
+<script type="text/javascript">
+//提醒：一定要设置iis那边上传文件大小，默认是200k，一定要改大！！！！！！！！！！！！
+$("#file1").change(function(){
+	/////////////////////浏览器端预检查文件类型和大小////////////////////////
+	//解释：增强体验，行不行早说，免得传了半天说体型（体积/类型）不合适。
+	//1.体积。误选择大文件导致网页直接卡死。 或者超过规定大小服务器直接返回500错误。
+	//2.类型。误选择类型。 而不是等N秒服务器接收到post包后再提示类型错误。
+	////////////////////////////////////////////////////////////////////////////
+	var tmpFiles=file1.files;
+	for(var i=0; i< tmpFiles.length; i++){
+		if(!/.(gif|jpg|jpeg|png)$/i.test(tmpFiles[i].name)){//方法一：通过文件名后缀判断
+		// if(!/^image\//.test(tmpFiles[i].type)){ //方法二：通过type属性判断是否是image/开头的
+			alert("不是图片类型！ 您上传的类型是：" + tmpFiles[i].type);
+			$(this).val("");
+			return false;
+		}else if(tmpFiles[i].size>30*1024*1024){//限制文件大小30M，可根据需要修改
+			alert("文件太大了！建议不超过30M，您上传的大小是：" + parseInt(tmpFiles[i].size/1024/1024) + "M");
+			$(this).val("");
+			return false;
+		}
+	}
+	//==========================前端检查结束====================================
+
+	/////////////////////////使用ajax方法提交数据///////////////////////////////
+	$.ajax({
+        url: "ajax_upload.asp",
+        type: 'POST',
+        cache: false,
+        data: new FormData($("#form1")[0]),
+        processData: false,
+        contentType: false,
+        success: function (backdata) {
+			$("#result").html("<b>服务器返回的图片路径：</b><br>" + backdata.replace(/\r\n/img,"<br>"))
+        },
+        error: function (err) {
+        	$("#result").html("发生意外错误，请检查并排除问题后重试。建议检查iis端“最大请求实体主体限制”");
+        }
+    });
+    //==========================第二波骚操作结束================================
+});
+</script>
+</html>
