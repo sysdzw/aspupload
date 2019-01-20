@@ -1,4 +1,5 @@
-﻿<%
+<%@ CODEPAGE=65001 %>
+<%
 '=========================================================================================================
 '类  名 : 微标ASP上传类 v1.3（无刷新、无组件、多文件上传，并且可查杀木马,utf-8格式）
 '作  者 : sysdzw
@@ -9,13 +10,12 @@
 '          v1.2 修改文件格式为utf-8格式，以提高兼容性												2018-08-13
 '               修改代码中部分Charset="gb2312"为Charset="utf-8"，以提高兼容性
 '               增加了图片木马检测功能。在上传的时候以gb2312格式读入字符串检测是否包含request等关键字
-'          v1.3 改进了图片木马检测功能。加入了更多的关键字判断，让木马无处遁形						2018-10-04
+'          v1.3 改进了图片木马检测功能。加入了更多的关键字判断，让木马无处遁形							2018-10-04
 '=========================================================================================================
-%>
-<%@ CODEPAGE=65001 %>
-<% Response.CodePage=65001 %>
-<% Response.Charset="UTF-8" %>
-<%
+
+Response.CodePage=65001 
+Response.Charset="UTF-8"
+
 dim oUpFileStream
 
 Class upload_file
@@ -33,7 +33,8 @@ Class upload_file
 		intItemCount=0
 		AllowFiles="jpg,jpeg,gif,png" '所允许的文件格式
 		MaxDownFileSize = 30000	'限制30M
-		vMumaKeyWord = split("request|execute|wscript.shell|activexobject|include|function|.encode|.getfolder|.createfolder|.deletefolder|.createdirectory|.deletedirectory|.saveas|.createobject","|") '要检测的木马关键字
+		'要检测的木马关键字，可自由扩充，用|分隔，但是要注意别误杀，比如有些图片exif信息包含description，如果你作为关键排除，那么就误杀了
+		vMumaKeyWord = split("request|execute|wscript.shell|activexobject|include|function|.encode|.getfolder|.createfolder|.deletefolder|.createdirectory|.deletedirectory|.saveas|.createobject","|") 
 		set Form = Server.CreateObject("Scripting.Dictionary")
 		set File = Server.CreateObject("Scripting.Dictionary")
 		if Request.TotalBytes <= 0 then Exit Sub
