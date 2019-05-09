@@ -1,4 +1,4 @@
-﻿<!--#include file="clsUpload.asp"-->
+<!--#include file="clsUpload.asp"-->
 <%
 dim upload,file,formName,SavePath,filename
 dim strMsg
@@ -6,6 +6,12 @@ dim strMsg
 SavePath = "uploadfiles/"   '存放上传文件的目录，注意最后要加/
 
 set upload=new upload_file    '建立上传对象
+
+if upload.fileCount>3 then'限制单次上传的文件个数，如果不限制就把这段if注释掉
+	response.write "上传文件不能超过2个！"
+	response.end
+end if
+
 for each formName in upload.file '列出所有上传了的文件
 	set file=upload.file(formName)  '生成一个文件对象
 	if file.ErrCode>0 then
