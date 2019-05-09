@@ -11,6 +11,7 @@
 '               修改代码中部分Charset="gb2312"为Charset="utf-8"，以提高兼容性
 '               增加了图片木马检测功能。在上传的时候以gb2312格式读入字符串检测是否包含request等关键字
 '          v1.3 改进了图片木马检测功能。加入了更多的关键字判断，让木马无处遁形							2018-10-04
+'          v1.4 增加了属性FileCount，这样可对上传数量进行控制，用法请参考ajax_upload.微标ASP上传类	2019-05-09
 '=========================================================================================================
 
 Response.CodePage=65001 
@@ -20,7 +21,7 @@ dim oUpFileStream
 
 Class upload_file
 	dim Form,File,Version
-	public AllowFiles,MaxDownFileSize,fileCount
+	public AllowFiles,MaxDownFileSize,FileCount
 
 	Private Sub Class_Initialize 
 		dim RequestBinDate,sStart,bCrLf,sInfo,iInfoStart,iInfoEnd,tStream,iStart,oFileInfo,testStream,savePosition,strContent
@@ -143,7 +144,7 @@ Class upload_file
 			iFormStart = iFormStart+iStart+2
 			'如果到文件尾了就退出
 		loop until (iFormStart+2) = iFormEnd 
-		fileCount=intItemCount
+		FileCount=intItemCount
 		RequestBinDate=""
 		set tStream = nothing
 	End Sub
