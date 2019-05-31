@@ -93,7 +93,7 @@ Class upload_file
 				elseif instr(AllowFiles,lcase(oFileInfo.FileExt))=0 then '如果只是图片可用oFileInfo.FileType来判断是否包含image/
 					oFileInfo.ErrCode=2
 					oFileInfo.ErrMsg="类型限制，只允许上传“" & AllowFiles & "”这几种文件类型，您上传的文件类型是" & oFileInfo.FileExt & "。"
-				else
+				else'进行图马检测
 					set testStream = Server.CreateObject("adodb.stream")
 					testStream.Type = 1
 					testStream.Mode = 3
@@ -104,7 +104,7 @@ Class upload_file
 					testStream.Position = 0
 					testStream.Type = 2
 					testStream.Charset ="gb2312"
-					strContent=lcase(testStream.ReadText)'以文本方式读取，然后判断是否包含图马相关的字符串，尽管乱码，但是基本字符串还是能检查出来的
+					strContent=lcase(testStream.ReadText)'以gb2312文本方式读取，然后判断是否包含图马相关的字符串，尽管乱码，但是基本字符串还是能检查出来的
 					strContent=replace(strContent,chr(0),"")
 					oFileInfo.FileText=strContent
 					for intMKW=0 to ubound(vMumaKeyWord)
@@ -126,6 +126,7 @@ Class upload_file
 				intItemCount=intItemCount+1'当一个file控件选择上传多个文件，添加到字典的sFormName会提示重复，所以后面加个索引区分 20180604
 				file.add sFormName & "_" & intItemCount,oFileInfo
 				set oFileInfo=nothing
+				FileCount=FileCount+1'对文件个数进行累计
 			else'如果是表单项目
 				tStream.Close
 				tStream.Type = 1
@@ -144,7 +145,6 @@ Class upload_file
 			iFormStart = iFormStart+iStart+2
 			'如果到文件尾了就退出
 		loop until (iFormStart+2) = iFormEnd 
-		FileCount=intItemCount
 		RequestBinDate=""
 		set tStream = nothing
 	End Sub
