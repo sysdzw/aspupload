@@ -24,8 +24,9 @@ Class upload_file
 	public AllowFiles,MaxDownFileSize,FileCount
 
 	Private Sub Class_Initialize 
-		dim RequestBinDate,sStart,bCrLf,sInfo,iInfoStart,iInfoEnd,tStream,iStart,testStream,savePosition,strContent
+		dim RequestBinDate,sSpace,bCrLf,sInfo,iInfoStart,iInfoEnd,tStream,iStart
 		dim oFileInfo
+		dim sStart,testStream,savePosition,strContent
 		dim iFileSize,sFilePath,sFileType,sFormvalue,sFileName
 		dim iFindStart,iFindEnd
 		dim iFormStart,iFormEnd,sFormName
