@@ -68,3 +68,5 @@
 - 如果有报错，请给出报错信息
 
 一切不满足上述要求的issue我会直接删除，特别是诸如`有问题`, `有bug`, `不兼容` 等说了等于没说的描述，请不要浪费大家时间。
+
+![](https://github.com/sysdzw/aspupload/blob/master/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%B5%8B%E8%AF%95%E6%88%AA%E5%9B%BE.jpg)
