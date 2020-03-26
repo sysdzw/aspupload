@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<style type="text/css">
+*{margin:0px; padding:0px;}
+</style>
+<script src="https://cdn.staticfile.org/jquery/1.11.2/jquery.min.js"></script>
+<title>上传文件测试</title>
+</head>
+<body>
+<form method="post" name="form1" id="form1"  enctype="multipart/form-data">
+  <input name="file1" id="file1" type="file" multiple="multiple" size="20" accept="image/*">
+  <div id="result"></div>
+</form>
+</body>
+<script type="text/javascript">
+//提醒：一定要设置iis那边上传文件大小，默认是200k，一定要改大！！！！！！！！！！！！
+$("#file1").change(function(){
+	/////////////////////浏览器端预检查文件类型和大小////////////////////////
+	//解释：增强用户体验，以下情况可早发现早提示不用麻烦服务端：
+	//1.误选择超过规定大小的文件。js判断立马就能给出提示，如果直接扔给服务器会等N秒包post完毕后才报错，浪费资源和时间，另外也避免了误选择大文件导致卡死，比如点错选择了个几百兆的压缩包，js秒判断，保证网页不会被卡死
+	//2.误选择非期望的文件类型。 js可秒判断，服务端要等N秒接收到post包后才能给出提示。
+	////////////////////////////////////////////////////////////////////////////
+	var tmpFiles=document.all.file1.files;
+	for(var i=0; i< tmpFiles.length; i++){
+		if(!/.(gif|jpg|jpeg|png)$/i.test(tmpFiles[i].name)){//方法一：通过文件名后缀判断
+		// if(!/^image\//.test(tmpFiles[i].type)){ //方法二：通过type属性判断是否是image/开头的
+			alert("不是图片类型！ 您上传的类型是：" + tmpFiles[i].type);
+			$(this).val("");
+			return false;
+		}else if(tmpFiles[i].size>30*1024*1024){//限制文件大小30M，可根据需要修改
+			alert("文件太大了！建议不超过30M，您上传的大小是：" + parseInt(tmpFiles[i].size/1024/1024) + "M");
+			$(this).val("");
+			return false;
+		}
+	}
+	//==========================第一波骚操作 前端检查结束====================================
+
+	/////////////////////////使用ajax方法提交数据///////////////////////////////
+	$.ajax({
+        url: "ajax_upload.asp",
+        type: 'POST',
+        cache: false,
+        data: new FormData($("#form1")[0]),
+        processData: false,
+        contentType: false,
+        success: function (backdata) {
+			$("#result").html("<b>服务器返回的图片路径：</b><br>" + backdata.replace(/\r\n/img,"<br>"));
+			$("#result").after("<b>图片：</b><br><img src=" + backdata.replace(/\r\n/img,"><br><img src=") + ">");
+        },
+        error: function (err) {
+        	$("#result").html("发生意外错误，请检查并排除问题后重试。建议检查iis端“最大请求实体主体限制”");
+        }
+    });
+    //==========================第二波骚操作 上传处理结束================================
+});
+</script>
+</html>
