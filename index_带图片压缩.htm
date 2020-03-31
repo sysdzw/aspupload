@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+	
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<script src="./js/base64image.js" type="text/javascript"></script>
+    <script src="./js/exif.js" type="text/javascript"></script>
+<style type="text/css">
+*{margin:0px; padding:0px;}
+	
+    img.abc{
+        height: 50px;margin-right:10px;
+    }
+</style>
+<script src="https://cdn.staticfile.org/jquery/1.11.2/jquery.min.js"></script>
+<title>上传文件测试</title>
+</head>
+<body>
+<form method="post" name="form1" id="form1"  enctype="multipart/form-data">
+  <input name="file1" id="file1" type="file" multiple="multiple" size="20" accept="image/gif,image/jpg,image/jpeg,image/png">
+  <div id="result"></div>
+</form>
+	<div id="fa2" ></div>
+	
+</body>
+<ml>
+<script type="text/javascript">
+	//前端检查文件大小。另外提醒：一定要设置iis那边上传文件大小，默认是200k，一定要改大！！！！！！！！！！！！
+	$("#file1").change(function(){
+		var tmpFiles=document.all.file1.files;
+		for(var i=0; i< tmpFiles.length; i++){
+			if(!/.(gif|jpg|jpeg|png|doc|docx)$/i.test(tmpFiles[i].name)){//方法一：通过文件名后缀判断
+			// if(!/^image\//.test(tmpFiles[i].type)){ //方法二：通过type属性判断是否是image/开头的
+				alert("不是图片类型！ 您上传的类型是：" + tmpFiles[i].type);
+				$(this).val("");
+				return false;
+			}else if(tmpFiles[i].size>30*1024*1024){//限制文件大小30M，可根据需要修改
+				alert("文件太大了！建议不超过30M，您上传的大小是：" + parseInt(tmpFiles[i].size/1024/1024) + "M");
+				$(this).val("");
+				return false;
+			}
+		}
+	});
+
+	var formdata=new FormData();
+	var completeCount=0;
+	var fileLength=0;
+	var time1;
+	document.getElementById('file1').onchange = function(){
+		var preview = document.querySelector("img");
+		var files = document.querySelector("input[type=file]").files;
+        if(files.length>0){
+			completeCount=0;
+			fileLength=files.length;
+			for (var i = 0; i < files.length; i++) { 
+				setup_reader(files[i]); 
+			}
+			
+			time1=setInterval("fun1()",1000);
+        }
+	}
+	function fun1(){
+		if (fileLength==completeCount){
+			uploadimg();
+			clearInterval(time1);
+		}
+	}
+
+    function setup_reader(file){
+	    const name = file.name;
+	    base64Image({
+	        width: 750,                             /*【选填】宽度默认750，如果图片尺寸大于该宽度，图片将被设置为该宽度*/
+	        ratio: 0.75,                            /*【选填】压缩率默认0.75 */
+	        file: file,                               /*【必填】对应的上传元素 */
+	        callback: function (imageUrl){         /*【必填】处理成功后的回调函数 */
+	            /*imageUrl为得到的图片base64数据，这里可以进行上传到服务器或者其他逻辑操作 */
+				var img = new Image();
+				img.className='abc'
+	            img.src = imageUrl;
+
+	           	var arr = imageUrl.split(","),
+				mime = arr[0].match(/:(.*?);/)[1],
+				bstr = atob(arr[1]),
+				n = bstr.length,
+				u8arr = new Uint8Array(n);
+				while (n--) {
+					u8arr[n] = bstr.charCodeAt(n);
+				}
+				let newfile =  new File([u8arr], name, { type: mime });
+
+				formdata.append('file',newfile);
+				completeCount+=1;
+	              
+				document.getElementById('fa2').appendChild(img);
+	        },
+	    });
+    }
+
+    //上传文件
+    function uploadimg(){
+        $.ajax({
+        url: "ajax_upload.asp",
+        type: 'POST',
+        cache: false,
+        data: formdata,
+        processData: false,
+        contentType: false,
+         success: function (backdata) {
+			$("#result").html("<b>服务器返回的图片路径：</b><br>" + backdata.replace(/\r\n/img,"<br>"));
+			formdata.delete('file');
+        },
+        error: function (err) {
+        	$("#result").html("发生意外错误，请检查并排除问题后重试。建议检查iis端“最大请求实体主体限制”");
+        }
+    });
+    }
+</script>
+</html>
