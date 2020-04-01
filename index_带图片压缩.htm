@@ -17,7 +17,7 @@
         height: 50px;margin-right:10px;
     }
 </style>
-<script src="https://cdn.staticfile.org/jquery/1.11.2/jquery.min.js"></script>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 <title>上传文件测试</title>
 </head>
 <body>
@@ -52,7 +52,7 @@
 	var fileLength=0;
 	document.getElementById('file1').onchange = function(){
 		var preview = document.querySelector("img");
-		var files = document.querySelector("input[type=file]").files;
+		var files = this.files;
         if(files.length>0){
 			completeCount=0;
 			fileLength=files.length;
