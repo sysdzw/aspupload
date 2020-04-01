@@ -50,7 +50,6 @@
 	var formdata=new FormData();
 	var completeCount=0;
 	var fileLength=0;
-	var time1;
 	document.getElementById('file1').onchange = function(){
 		var preview = document.querySelector("img");
 		var files = document.querySelector("input[type=file]").files;
@@ -60,15 +59,7 @@
 			for (var i = 0; i < files.length; i++) { 
 				setup_reader(files[i]); 
 			}
-			
-			time1=setInterval("fun1()",1000);
         }
-	}
-	function fun1(){
-		if (fileLength==completeCount){
-			uploadimg();
-			clearInterval(time1);
-		}
 	}
 
     function setup_reader(file){
@@ -95,6 +86,7 @@
 
 				formdata.append('file',newfile);
 				completeCount+=1;
+				uploadimg();
 	              
 				document.getElementById('fa2').appendChild(img);
 	        },
@@ -103,6 +95,9 @@
 
     //上传文件
     function uploadimg(){
+    	if (fileLength!=completeCount)
+    		return;
+
         $.ajax({
         url: "ajax_upload.asp",
         type: 'POST',
