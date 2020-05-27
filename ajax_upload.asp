@@ -1,10 +1,19 @@
-<!--#include file="clsUpload.asp"-->
+﻿<!--#include file="clsUpload.asp"-->
 <%
 dim upload,file,formName,SavePath,filename
 dim strMsg
 
 SavePath = "uploadfiles/"   '存放上传文件的目录，注意最后要加/
 FileCountLimited=0 '限制单次上传的文件数量，默认为0表示不限制数量，如果限制用户一次只能上传3个文件就显示为3，如果不允许上传就设置为任意一个负数
+
+Dim objFSO 
+Set objFSO = Server.CreateObject("Scripting.FileSystemObject") 
+If not objFSO.FolderExists(Server.MapPath(SavePath)) Then
+	' strMsg="SavePath变量设置的目录不存在，请仔细检查 " & Server.MapPath(SavePath)
+	' response.write strMsg
+	' response.end
+	objFSO.CreateFolder(Server.MapPath(SavePath)) '自动创建'
+End If
 
 set upload=new upload_file    '建立上传对象
 
