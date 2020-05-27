@@ -76,5 +76,5 @@
 
 ![](https://img-bbs.csdn.net/upload/202003/26/1585217487_243516.png)
 ![](https://img-bbs.csdn.net/upload/202003/26/1585217487_476064.png)
-![](https://img-bbs.csdn.net/upload/202003/26/1585235433_366956.jpg =200)
-![](https://img-bbs.csdn.net/upload/202003/26/1585235432_891699.jpg =300x)
+![](https://img-bbs.csdn.net/upload/202003/26/1585235433_366956.jpg){:width='50%'}
+![](https://img-bbs.csdn.net/upload/202003/26/1585235432_891699.jpg){:width="70%"}
