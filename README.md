@@ -43,7 +43,7 @@
 （2）FileCountLimited 表示限定用户上传文件的个数，默认为0表示不限制数量，如果限制用户一次只能上传3个文件就显示为3，如果不允许上传就设置为任意一个负数
 
 2.clsUpload.asp中的参数设置说明：
-（1）AllowFiles 所允许上传的文件格式，默认为"jpg,jpeg,gif,png"。
+（1）AllowFiles 所允许上传的文件格式，默认为"jpg,jpeg,gif,png"。通过修改这里可以控制文件上传格式。
 （2）MaxDownFileSize 允许上传的文件大小，默认30M，注意iis默认限制就200k，您需要在iis那儿做设置，网站 - asp - 限制属性 - 最大请求实体主体限制，加上两个0，改成20000000，这样就改成20M了。
 
 3.index.htm中的参数说明
