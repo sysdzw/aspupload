@@ -13,9 +13,10 @@ img{width:80px; height: 80px; margin:5px;padding:2px; border:1px solid #ccc;}
 #img_urls{width:100%;}
 #file1{display: none;}
 .uploadMain div{float:left;}
-.upload{width:80px; height: 80px;margin:5px;padding:2px;  border:1px solid #ccc; color: #ccc; font-size: 80px; text-align: center; line-height: 80px; font-family: "Letter Gothic", "Helvetica Neue","lucida grande", "lucida sans unicode", lucida, sans-serif;}
+.upload{width:80px; height: 80px;margin:5px;padding:2px;  border:1px solid #ccc; color: #ccc; font-size: 80px;text-align: center; line-height:76px; font-family: "Letter Gothic", "Helvetica Neue","lucida grande", "lucida sans unicode", lucida, sans-serif;}
 .clear{clear:both;}
 </style>
+<link rel="stylesheet" href="//at.alicdn.com/t/font_626784_94vzj1uhgvh.css" />
 <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 <title>上传文件测试</title>
 </head>
@@ -50,8 +51,8 @@ $("#file1").change(function(){
             alert("不是图片类型！ 您上传的类型是：" + tmpFiles[i].type);
             $(this).val("");
             return false;
-        }else if(tmpFiles[i].size>30*1024*1024){//限制文件大小30M，可根据需要修改
-            alert("文件太大了！建议不超过30M，您上传的大小是：" + parseInt(tmpFiles[i].size/1024/1024) + "M");
+        }else if(tmpFiles[i].size>10*1024*1024){//限制文件大小10M，可根据需要修改
+            alert("文件太大了！建议不超过10M，您上传的大小是：" + parseInt(tmpFiles[i].size/1024/1024) + "M");
             $(this).val("");
             return false;
         }
@@ -70,8 +71,8 @@ $("#file1").change(function(){
 			$("#result").append("<img src=" + backdata + ">");
             $("#img_urls").val($("#img_urls").val() + backdata + ",");
         },
-        error: function (err) {
-        	$("#result").html("发生意外错误，请检查并排除问题后重试。建议检查iis端“最大请求实体主体限制”");
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            $("#result").html(XMLHttpRequest.status + errorThrown + " 发生意外错误，请检查并排除问题后重试。建议检查iis端“最大请求实体主体限制”，错误详情：" + XMLHttpRequest.responseText);
         }
     });
     //==========================第二波骚操作 上传处理结束================================
