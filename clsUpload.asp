@@ -1,4 +1,4 @@
-<%@ CODEPAGE=65001 %>
+﻿<%@ CODEPAGE=65001 %>
 <%
 '=========================================================================================================
 '类  名 : 微标ASP上传类 v1.4（无刷新、无组件、多文件上传，并且可查杀木马,utf-8格式）
@@ -24,7 +24,7 @@ Class upload_file
 	public AllowFiles,MaxDownFileSize,FileCount
 
 	Private Sub Class_Initialize 
-		dim RequestBinDate,sSpace,bCrLf,sInfo,iInfoStart,iInfoEnd,tStream,iStart
+		dim RequestBinDate,bCrLf,sInfo,iInfoStart,iInfoEnd,tStream,iStart
 		dim oFileInfo
 		dim sStart,testStream,savePosition,strContent
 		dim iFileSize,sFilePath,sFileType,sFormvalue,sFileName
