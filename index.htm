@@ -45,6 +45,7 @@ $("#file1").change(function(){
     //2.误选择非期望的文件类型。 js可秒判断，服务端要等N秒接收到post包后才能给出提示。
     ////////////////////////////////////////////////////////////////////////////
     var tmpFiles=document.all.file1.files;
+    if(tmpFiles.length==0) return;//文件个数为0不继续
     for(var i=0; i< tmpFiles.length; i++){
         if(!/.(gif|jpg|jpeg|png)$/i.test(tmpFiles[i].name)){//方法一：通过文件名后缀判断
         // if(!/^image\//.test(tmpFiles[i].type)){ //方法二：通过type属性判断是否是image/开头的
