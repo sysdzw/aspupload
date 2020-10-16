@@ -86,4 +86,4 @@
 <img src="https://img-blog.csdnimg.cn/2020101700215783.jpg" width="40%">
 
 
-使用范例（“朋友圈”代码有偿提供，带access数据库，可发动态可删除动态，上传时可删除也预览）：http://test.wbyx.cn/test1015/
+使用范例（“简易朋友圈”代码有偿提供，带access数据库，可发动态可删除动态，上传时可删除也预览）：http://test.wbyx.cn/test1015/
