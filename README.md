@@ -90,6 +90,7 @@
 
 *简易朋友圈：* http://test.wbyx.cn/test_pyq/
 
-              http://test.wbyx.cn/test_pyq/center.asp
+http://test.wbyx.cn/test_pyq/center.asp
+
 
 *二级目录上传：* http://test.wbyx.cn/test_filemanagerv1/admin/DirManage.asp
