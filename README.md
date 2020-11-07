@@ -87,3 +87,6 @@
 
 
 使用范例（“简易朋友圈”代码有偿提供，带access数据库，可发动态可删除动态，上传时可删除也预览）：http://test.wbyx.cn/test1015/
+以下案例有偿提供：
+*简易朋友圈：*http://test.wbyx.cn/test_pyq/
+*二级目录上传：*http://test.wbyx.cn/test_filemanagerv1/admin/DirManage.asp
