@@ -65,7 +65,7 @@ $("#file1").change(function(){
         processData: false,
         contentType: false,
         success: function (backdata) {
-			$("#" + $("#file1").attr("target-input")).val(backdata);
+			$("input[name='" + $("#file1").attr("target-input") + "']").val(backdata);
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             $("#result").html(XMLHttpRequest.status + errorThrown + " 发生意外错误，请检查并排除问题后重试。建议检查iis端“最大请求实体主体限制”，错误详情：" + XMLHttpRequest.responseText);
