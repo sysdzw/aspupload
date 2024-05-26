@@ -89,8 +89,12 @@
 以下案例有偿提供：
 
 *简易朋友圈：* http://test.wbyx.cn/test_pyq/
-
 http://test.wbyx.cn/test_pyq/center.asp
+
+文件上传系统：
+https://www.wbyx.cn/file/
+![图片](https://github.com/sysdzw/aspupload/assets/7876919/94ba805e-268a-47ee-8c8d-d9f93a1de8cb)
+
 
 
 *二级目录上传：* http://test.wbyx.cn/test_filemanagerv1/admin/DirManage.asp
